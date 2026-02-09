@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Test</string>
+
+    <!-- Заголовок -->
+    <string name="grn_title">Guess Random Number between 1 and 100</string>
+
+    <!-- Текст подсказки -->
+    <string name="grn_hint">Введите число!</string>
+
+    <!-- Кнопки -->
+    <string name="enter">Enter</string>
+    <string name="reset">Reset</string>
+
+    <!-- Result: пустое значение по умолчанию -->
+    <string name="result_empty"></string>
+</resources>
