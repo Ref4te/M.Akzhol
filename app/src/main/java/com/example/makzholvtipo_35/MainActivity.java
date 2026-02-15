@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnMinus.setOnClickListener(v -> {
+            //if (score > 0) score--;
             score--;
             updateText();
         });
