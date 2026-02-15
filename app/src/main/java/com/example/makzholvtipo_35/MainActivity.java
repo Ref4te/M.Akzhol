@@ -3,14 +3,17 @@ package com.example.makzholvtipo_35;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView mainText;
-    Button mainBtn;
+    private TextView mainText;
+    private ImageView clickImage;
+    private Button btnPlus, btnMinus, btnReset;
+
     private long score = 0;
 
     @Override
@@ -18,22 +21,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // находим элементы по id
         mainText = findViewById(R.id.mainTxt);
-        mainBtn = findViewById(R.id.main_btn);
+        clickImage = findViewById(R.id.clickImage);
+        btnPlus = findViewById(R.id.btnPlus);
+        btnMinus = findViewById(R.id.btnMinus);
+        btnReset = findViewById(R.id.btnReset);
 
-        // создаем обработчик нажатия
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                score++;
+        updateText();
 
-                String s = "Кликов: " + score;
-                mainText.setText(s);
-            }
-        };
+        clickImage.setOnClickListener(v -> {
+            score++;
+            updateText();
+        });
 
-        // назначаем обработчик кнопке
-        mainBtn.setOnClickListener(clickListener);
+        btnPlus.setOnClickListener(v -> {
+            score++;
+            updateText();
+        });
+
+        btnMinus.setOnClickListener(v -> {
+            score--;
+            updateText();
+        });
+
+        btnReset.setOnClickListener(v -> {
+            score = 0;
+            updateText();
+        });
+    }
+
+    private void updateText() {
+        mainText.setText("Кнопка нажата " + score + " " + razWord(score));
+    }
+
+    private String razWord(long n) {
+        long a = Math.abs(n);
+        long lastTwo = a % 100;
+        long last = a % 10;
+
+        if (lastTwo >= 11 && lastTwo <= 14) return "раз";
+        if (last == 1) return "раз";
+        if (last >= 2 && last <= 4) return "раза";
+        return "раз";
     }
 }

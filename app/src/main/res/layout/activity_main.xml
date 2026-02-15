@@ -5,30 +5,62 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/screen_bg">
+    android:background="@color/screen_bg"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/mainTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
-        android:text="Кликов: 0"
+        android:text="Кнопка нажата 0 раз"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/clickImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="120dp"/>
+
+    <!-- Картинка вместо кнопки -->
+    <ImageView
+        android:id="@+id/clickImage"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/ic_click"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/mainTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
 
     <Button
-        android:id="@+id/main_btn"
+        android:id="@+id/btnMinus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/click_me"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:text="@string/decrement"
+        app:layout_constraintTop_toBottomOf="@id/clickImage"
+        app:layout_constraintEnd_toStartOf="@id/btnReset"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainTxt" />
+        android:layout_marginTop="28dp"/>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        app:layout_constraintTop_toBottomOf="@id/clickImage"
+        app:layout_constraintStart_toEndOf="@id/btnMinus"
+        app:layout_constraintEnd_toStartOf="@id/btnPlus"
+        android:layout_marginTop="28dp"/>
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/increment"
+        app:layout_constraintTop_toBottomOf="@id/clickImage"
+        app:layout_constraintStart_toEndOf="@id/btnReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="28dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

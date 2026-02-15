@@ -10,9 +10,8 @@
 
     <!-- Кнопки -->
     <string name="enter">Enter</string>
-    <string name="reset">Reset</string>
-
-    <!-- Result: пустое значение по умолчанию -->
-    <string name="result_empty"></string>
+    <string name="reset">Сброс</string>
     <string name="click_me">Нажми меня</string>
+    <string name="decrement">-1</string>
+    <string name="increment">+1</string>
 </resources>
