@@ -14,4 +14,5 @@
 
     <!-- Result: пустое значение по умолчанию -->
     <string name="result_empty"></string>
+    <string name="click_me">Нажми меня</string>
 </resources>
