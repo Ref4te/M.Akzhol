@@ -1,6 +1,7 @@
 package com.example.makzholvtipo_35;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -19,5 +20,11 @@ public class Activity3 extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        TextView tvName = findViewById(R.id.getName);
+
+        String name = getIntent().getStringExtra(Activity2.EXTRA_NAME);
+        if (name == null) name = "";
+
+        tvName.setText("Имя: " + name);
     }
 }
