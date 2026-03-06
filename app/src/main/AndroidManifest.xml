@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAkzholVTiPO35">
         <activity
+            android:name=".Activity4"
+            android:exported="false" />
+        <activity
+            android:name=".Activity3"
+            android:exported="false" />
+        <activity
+            android:name=".Activity2"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
