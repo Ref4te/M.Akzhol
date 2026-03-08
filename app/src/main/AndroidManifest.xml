@@ -18,9 +18,9 @@
 
         <provider
             android:name=".StudentProvider"
-            android:authorities="com.example.studentproviderapp.provider"
+            android:authorities="com.example.makzholvtipo_35.provider"
             android:exported="true"
-            android:permission="com.example.studentproviderapp.permission.ACCESS_STUDENTS" />
+            android:permission="com.example.makzholvtipo_35.permission.ACCESS_STUDENTS" />
 
         <activity android:name=".AddTaskActivity" />
         <activity

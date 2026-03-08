@@ -8,7 +8,7 @@ public final class StudentContract {
     private StudentContract() {
     }
 
-    public static final String AUTHORITY = "com.example.studentproviderapp.provider";
+    public static final String AUTHORITY = "com.example.makzholvtipo_35.provider";
     public static final Uri CONTENT_URI =
             Uri.parse("content://" + AUTHORITY + "/" + StudentEntry.TABLE_NAME);
 
