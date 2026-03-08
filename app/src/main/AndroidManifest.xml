@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MAkzholVTiPO35">
+        <activity android:name=".AddTaskActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

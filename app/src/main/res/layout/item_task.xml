@@ -14,32 +14,27 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/tvId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID: 1"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Название: Task" />
+            android:text="Название задачи"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDeadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Дедлайн: 10.03.2026 14:00" />
+            android:layout_marginTop="6dp"
+            android:text="Дедлайн: 10.03.2026 12:00" />
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:text="Категория: Учеба" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

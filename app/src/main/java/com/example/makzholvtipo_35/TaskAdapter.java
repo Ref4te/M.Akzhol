@@ -35,8 +35,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
 
-        holder.tvId.setText("ID: " + task.getId());
-        holder.tvTitle.setText("Название: " + task.getTitle());
+        holder.tvTitle.setText(task.getTitle());
         holder.tvDeadline.setText("Дедлайн: " + task.getDeadline());
 
         String category = task.getCategory();
@@ -53,12 +52,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView tvId, tvTitle, tvDeadline, tvCategory;
+        TextView tvTitle, tvDeadline, tvCategory;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            tvId = itemView.findViewById(R.id.tvId);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDeadline = itemView.findViewById(R.id.tvDeadline);
             tvCategory = itemView.findViewById(R.id.tvCategory);
