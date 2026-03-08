@@ -1,6 +1,8 @@
 package com.example.makzholvtipo_35;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,40 +16,60 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnAdd, btnDelete, btnRead, btnPickDateTime;
-    EditText etTitle, etCategory;
-    TextView tvDeadline, tvResult;
-    DBHelper dbHelper;
+    private Button btnAdd, btnRead, btnDelete, btnPickDateTime;
+    private EditText etTitle, etCategory;
+    private TextView tvSelectedDeadline;
 
-    String selectedDeadline = "";
+    private RecyclerView recyclerViewTasks;
+    private TaskAdapter taskAdapter;
+    private ArrayList<Task> taskList;
+
+    private DBHelper dbHelper;
+    private String selectedDeadline = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initViews();
+        initRecyclerView();
+
+        dbHelper = new DBHelper(this);
+
+        btnAdd.setOnClickListener(this);
+        btnRead.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+        btnPickDateTime.setOnClickListener(this);
+
+        loadTasksFromDatabase();
+    }
+
+    private void initViews() {
         btnAdd = findViewById(R.id.btnAdd);
-        btnDelete = findViewById(R.id.btnDelete);
         btnRead = findViewById(R.id.btnRead);
+        btnDelete = findViewById(R.id.btnDelete);
         btnPickDateTime = findViewById(R.id.btnPickDateTime);
 
         etTitle = findViewById(R.id.etTitle);
         etCategory = findViewById(R.id.etCategory);
+        tvSelectedDeadline = findViewById(R.id.tvSelectedDeadline);
 
-        tvDeadline = findViewById(R.id.tvDeadline);
-        tvResult = findViewById(R.id.tvResult);
+        recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
+    }
 
-        btnAdd.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
-        btnRead.setOnClickListener(this);
-        btnPickDateTime.setOnClickListener(this);
+    private void initRecyclerView() {
+        taskList = new ArrayList<>();
+        taskAdapter = new TaskAdapter(taskList);
 
-        dbHelper = new DBHelper(this);
+        recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewTasks.setAdapter(taskAdapter);
     }
 
     @Override
@@ -59,13 +81,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.btnAdd) {
             addTask();
         } else if (id == R.id.btnRead) {
-            readTasks();
+            loadTasksFromDatabase();
         } else if (id == R.id.btnDelete) {
             deleteAllTasks();
         }
     }
 
-    // Функция добавления задачи в базу данных
     private void addTask() {
         String title = etTitle.getText().toString().trim();
         String category = etCategory.getText().toString().trim();
@@ -87,25 +108,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cv.put(DBHelper.COLUMN_DEADLINE, selectedDeadline);
         cv.put(DBHelper.COLUMN_CATEGORY, category);
 
-        long rowId = db.insert(DBHelper.TABLE_NAME, null, cv);
+        long result = db.insert(DBHelper.TABLE_NAME, null, cv);
+        db.close();
 
-        if (rowId != -1) {
+        if (result != -1) {
             Toast.makeText(this, "Дело добавлено", Toast.LENGTH_SHORT).show();
+
             etTitle.setText("");
             etCategory.setText("");
             selectedDeadline = "";
-            tvDeadline.setText("Дедлайн не выбран");
-        } else {
-            Toast.makeText(this, "Ошибка при добавлении", Toast.LENGTH_SHORT).show();
-        }
+            tvSelectedDeadline.setText("Дедлайн не выбран");
 
-        db.close();
+            loadTasksFromDatabase();
+        } else {
+            Toast.makeText(this, "Ошибка добавления", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // Функция чтения всех задач из базы данных
-    private void readTasks() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+    private void deleteAllTasks() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int deletedRows = db.delete(DBHelper.TABLE_NAME, null, null);
+        db.close();
 
+        Toast.makeText(this, "Удалено записей: " + deletedRows, Toast.LENGTH_SHORT).show();
+        loadTasksFromDatabase();
+    }
+
+    private void loadTasksFromDatabase() {
+        ArrayList<Task> newTaskList = new ArrayList<>();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query(
                 DBHelper.TABLE_NAME,
                 null,
@@ -116,8 +148,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DBHelper.COLUMN_ID + " DESC"
         );
 
-        StringBuilder builder = new StringBuilder();
-
         if (c.moveToFirst()) {
             int idColIndex = c.getColumnIndex(DBHelper.COLUMN_ID);
             int titleColIndex = c.getColumnIndex(DBHelper.COLUMN_TITLE);
@@ -125,35 +155,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int categoryColIndex = c.getColumnIndex(DBHelper.COLUMN_CATEGORY);
 
             do {
-                builder.append("ID: ").append(c.getInt(idColIndex)).append("\n");
-                builder.append("Название: ").append(c.getString(titleColIndex)).append("\n");
-                builder.append("Дедлайн: ").append(c.getString(deadlineColIndex)).append("\n");
-                builder.append("Категория: ").append(c.getString(categoryColIndex)).append("\n");
-                builder.append("--------------------------\n");
-            } while (c.moveToNext());
+                int id = c.getInt(idColIndex);
+                String title = c.getString(titleColIndex);
+                String deadline = c.getString(deadlineColIndex);
+                String category = c.getString(categoryColIndex);
 
-            tvResult.setText(builder.toString());
-        } else {
-            tvResult.setText("Список дел пуст");
+                newTaskList.add(new Task(id, title, deadline, category));
+            } while (c.moveToNext());
         }
 
         c.close();
         db.close();
+
+        taskAdapter.setTaskList(newTaskList);
     }
 
-    // Функция удаления всех задач из базы данных
-    private void deleteAllTasks() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        int deletedRows = db.delete(DBHelper.TABLE_NAME, null, null);
-
-        tvResult.setText("");
-        Toast.makeText(this, "Удалено записей: " + deletedRows, Toast.LENGTH_SHORT).show();
-
-        db.close();
-    }
-
-    // Функция выбора даты и времени
     private void pickDateTime() {
         Calendar calendar = Calendar.getInstance();
 
@@ -180,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         selectedMinute
                                 );
 
-                                tvDeadline.setText(selectedDeadline);
+                                tvSelectedDeadline.setText(selectedDeadline);
 
                             }, hour, minute, true);
 
