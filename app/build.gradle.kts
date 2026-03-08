@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.makzholvtipo_35"
+        applicationId = "com.example.makzholvtipo_35.client"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

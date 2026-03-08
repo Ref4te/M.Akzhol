@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+<!--Даем разрешение на использование content provider-->
+    <uses-permission
+        android:name="com.example.makzholvtipo_35.permission.ACCESS_STUDENTS"/>
 
     <application
         android:allowBackup="true"
