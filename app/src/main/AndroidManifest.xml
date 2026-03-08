@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Собственное разрешение -->
+    <permission
+        android:name="com.example.makzholvtipo_35.permission.ACCESS_STUDENTS"
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MAkzholVTiPO35">
+
+        <provider
+            android:name=".StudentProvider"
+            android:authorities="com.example.studentproviderapp.provider"
+            android:exported="true"
+            android:permission="com.example.studentproviderapp.permission.ACCESS_STUDENTS" />
+
         <activity android:name=".AddTaskActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ProviderMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
