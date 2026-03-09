@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.makzholvtipo_35"
+    namespace = "com.example.notesapp"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.makzholvtipo_35"
+        applicationId = "com.example.notesapp"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

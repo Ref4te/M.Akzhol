@@ -1,4 +1,4 @@
-package com.example.makzholvtipo_35;
+package com.example.notesapp;
 
 import android.content.Context;
 
